@@ -1,0 +1,23 @@
+package com.sp.student.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.sp.student.service.StudentService;
+
+@Controller
+public class StudentController {
+@Autowired
+StudentService studentService;
+@GetMapping("/form")
+public String getStudent() {
+	return "student";
+}
+@PostMapping("/submit")
+public String submit() {
+	return "submit";
+}
+	
+}

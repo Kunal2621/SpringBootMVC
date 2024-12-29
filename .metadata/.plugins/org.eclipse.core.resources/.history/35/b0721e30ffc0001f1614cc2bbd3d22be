@@ -1,0 +1,69 @@
+package com.kp.sprinboot.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.kp.sprinboot.ProductEntity.ProductEntity;
+import com.kp.sprinboot.productmodel.ProductModel;
+import com.kp.sprinboot.productrepository.ProductRepository;
+
+@Service
+public class ProductService {
+@Autowired
+ProductRepository productRepository;
+public void SaveProductDetails(ProductModel productModel) {
+	double stockvalue;
+	stockvalue =productModel.getPrice()*productModel.getQuantity();
+	double disprice;
+	disprice =productModel.getPrice()*productModel.getDiscountrate()/100;
+	double offerprice=productModel.getPrice()-disprice;
+	double taxrate =18.00;
+	double finalprice =offerprice+(offerprice*taxrate)/100;
+	ProductEntity productEntity =new ProductEntity();
+	productEntity.setName(productModel.getName());
+	productEntity.setBrand(productModel.getBrand());
+	productEntity.setDiscountrate(productModel.getDiscountrate());
+	productEntity.setDisprice(disprice);
+	productEntity.setFinalprice(finalprice);
+	productEntity.setTaxrate(taxrate);
+	productEntity.setMadeIn(productModel.getMadeIn());
+	productEntity.setOfferpirce(offerprice);
+	productEntity.setPrice(productModel.getPrice());
+	productEntity.setStackvalue(stockvalue);
+	productEntity.setQuantity(productModel.getQuantity());
+	productRepository.save(productEntity);
+	
+}
+public List<ProductEntity> getAllProduct(){
+	List<ProductEntity> products =productRepository.findAll();
+	return products;
+}
+public ProductEntity serachbyid(long id) {
+	Optional<ProductEntity>optionalData =productRepository.findById(id);
+	if(optionalData.isPresent()) {
+	ProductEntity product =optionalData.get();
+	return product;
+	}
+	else {
+		return null;
+	}
+}
+public void DeleteByProductId(long id) {
+	// TODO Auto-generated method stub
+	productRepository.deleteById(id);
+}
+public void editbyid(long id ,ProductModel productModel) {
+	ProductEntity productEntity =new ProductEntity();
+	productModel.setBrand(productEntity.getBrand());
+	productModel.setName(productEntity.getName());
+	productModel.setMadeIn(productEntity.getMadeIn());
+	productModel.setDiscountrate(productEntity.getDiscountrate());
+	productModel.setPrice(productEntity.getPrice());
+	productModel.setQuantity(productEntity.getQuantity());
+	productRepository.save(productEntity);	
+}
+
+}

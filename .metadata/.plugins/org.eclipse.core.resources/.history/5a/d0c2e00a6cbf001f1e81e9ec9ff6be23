@@ -1,0 +1,81 @@
+package com.kp.sprinboot.testcontroller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.kp.sprinboot.ProductEntity.ProductEntity;
+import com.kp.sprinboot.productmodel.ProductModel;
+import com.kp.sprinboot.service.ProductService;
+@Controller 
+public class ProductControleler{
+	
+@Autowired
+ProductService productService;
+	
+@GetMapping("/form")
+public String greet() {
+	return "Add_Product";
+}
+
+
+@PostMapping("/saveProduct")
+public String ScaveProduct( @ModelAttribute ProductModel productModel) {
+	System.out.println(productModel);
+	productService.SaveProductDetails(productModel);
+	return "Success";
+}
+@GetMapping("/contact")
+	public String contact() {
+		return "contact";
+	}
+
+
+@GetMapping("/about")
+public String about() {
+	return "about";
+}
+
+@GetMapping("/getAllProduct")
+public String getAllProduct(Model model) {
+	List<ProductEntity>products =productService.getAllProduct();
+	model.addAttribute("products" ,products);
+	return "Product_list";
+	
+}
+@GetMapping("/search")
+public String search() {
+	return "searchbyid";
+}
+@PostMapping("/searchbyid")
+public String search(@RequestParam long id,Model model) {
+	ProductEntity product =productService.serachbyid(id);
+	model.addAttribute("product",product);
+	return "searchbyid";
+}
+
+// For delete the product
+@GetMapping("/delete/{id}")
+public String DeleteByPruductId(@PathVariable("id") long id) {
+	productService.DeleteByProductId(id);
+	return "redirect:/getAllProduct";
+}
+//Add The product by using button
+@GetMapping("/add")
+public String addbybutton(Model model) {
+	List<ProductEntity>products =productService.getAllProduct();
+	model.addAttribute("products" ,products);
+	return "redirect:/form";
+}
+
+}
+
+
+ 

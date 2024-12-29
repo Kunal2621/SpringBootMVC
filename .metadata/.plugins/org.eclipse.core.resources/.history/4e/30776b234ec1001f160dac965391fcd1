@@ -1,0 +1,124 @@
+package com.kp.sprinboot.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.kp.sprinboot.ProductEntity.ProductEntity;
+import com.kp.sprinboot.productmodel.ProductModel;
+import com.kp.sprinboot.productrepository.ProductRepository;
+
+@Service
+public class ProductService {
+@Autowired
+ProductRepository productRepository;
+public void SaveProductDetails(ProductModel productModel) {
+	double stockvalue;
+	stockvalue =productModel.getPrice()*productModel.getQuantity();
+	double disprice;
+	disprice =productModel.getPrice()*productModel.getDiscountrate()/100;
+	double offerprice=productModel.getPrice()-disprice;
+	double taxrate =18.00;
+	double finalprice =offerprice+(offerprice*taxrate)/100;
+	ProductEntity productEntity =new ProductEntity();
+	productEntity.setName(productModel.getName());
+	productEntity.setBrand(productModel.getBrand());
+	productEntity.setDiscountrate(productModel.getDiscountrate());
+	productEntity.setDisprice(disprice);
+	productEntity.setFinalprice(finalprice);
+	productEntity.setTaxrate(taxrate);
+	productEntity.setMadeIn(productModel.getMadeIn());
+	productEntity.setOfferpirce(offerprice);
+	productEntity.setPrice(productModel.getPrice());
+	productEntity.setStackvalue(stockvalue);
+	productEntity.setQuantity(productModel.getQuantity());
+	productRepository.save(productEntity);
+	
+}
+public List<ProductEntity> getAllProduct(){
+	List<ProductEntity> products =productRepository.findAll();
+	return products;
+}
+public ProductEntity serachbyid(long id) {
+	Optional<ProductEntity>optionalData =productRepository.findById(id);
+	if(optionalData.isPresent()) {
+	ProductEntity product =optionalData.get();
+	return product;
+	}
+	else {
+		return null;
+	}
+}
+public void DeleteByProductId(long id) {
+	// TODO Auto-generated method stub
+	productRepository.deleteById(id);
+}
+//public void editbyid(long id ,ProductModel productModel) {
+//	ProductEntity productEntity =new ProductEntity();
+//	productRepository.findById(id);
+//	productModel.setBrand(productEntity.getBrand());
+//    productModel.setName(productEntity.getName());
+//	productModel.setMadeIn(productEntity.getMadeIn());
+//	productModel.setDiscountrate(productEntity.getDiscountrate());
+//	productModel.setPrice(productEntity.getPrice());
+//	productModel.setQuantity(productEntity.getQuantity());
+//	productRepository.save(productEntity);	
+//}
+
+
+//public ProductEntity editbyid(long id) {
+//	
+//	 ProductEntity prev = productRepository.findById(id)
+//	            .orElseThrow(() -> new RuntimeException("Product not found"));
+//ProductEntity productEntity =new ProductEntity();
+//		prev.setBrand(productEntity.getBrand());
+//		prev.setName(productEntity.getName());
+//		prev.setMadeIn(productEntity.getMadeIn());
+//		prev.setDiscountrate(productEntity.getDiscountrate());
+//		prev.setPrice(productEntity.getPrice());
+//		prev.setQuantity(productEntity.getQuantity());
+//		productRepository.save(prev);	
+//		return prev;	
+//}
+
+public Optional<ProductEntity> editbyid(long id) {
+    // Fetch the existing product by ID
+    return productRepository.findById(id);
+           
+}
+
+
+
+public ProductEntity updateProduct(long id) {
+    // Fetch the existing product by ID or throw an exception if not found
+    ProductEntity existingProduct = productRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
+    ProductModel productModel =new ProductModel();
+
+    // Update the fields of the existing product with values from the ProductModel
+    existingProduct.setName(productModel.getName());
+    existingProduct.setBrand(productModel.getBrand());
+    existingProduct.setMadeIn(productModel.getMadeIn());
+    existingProduct.setPrice(productModel.getPrice());
+    existingProduct.setQuantity(productModel.getQuantity());
+    existingProduct.setDiscountrate(productModel.getDiscountrate());
+
+    // Calculate dependent fields (e.g., discounted price, final price, etc.)
+    double discount = (existingProduct.getPrice() * existingProduct.getDiscountrate()) / 100;
+    existingProduct.setDisprice(discount);
+    double tax = (existingProduct.getPrice() - discount) * 0.10; // Assuming a 10% tax rate
+    existingProduct.setTaxrate(tax);
+    double finalPrice = existingProduct.getPrice() - discount + tax;
+    existingProduct.setFinalprice(finalPrice);
+    existingProduct.setStackvalue(finalPrice * existingProduct.getQuantity());
+
+    // Save the updated product back to the repository
+    return productRepository.save(existingProduct);
+}
+
+
+
+}
+

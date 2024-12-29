@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Student Details</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .table th, .table td {
+            text-align: center;
+            padding: 10px;
+        }
+
+        .table thead {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .table td {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Student Details</h1>
+
+        <!-- Student Details Table -->
+        <table class="table table-bordered mt-4">
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>ID</td>
+                    <td th:text="${student.id}">1</td>
+                </tr>
+                <tr>
+                    <td>Name</td>
+                    <td th:text="${student.name}">John Doe</td>
+                </tr>
+                <tr>
+                    <td>Department</td>
+                    <td th:text="${student.department}">Computer Science</td>
+                </tr>
+                <tr>
+                    <td>Total Marks</td>
+                    <td th:text="${student.totalMarks}">300</td>
+                </tr>
+                <tr>
+                    <td>Average</td>
+                    <td th:text="${student.avg}">85.5</td>
+                </tr>
+                <tr>
+                    <td>Status</td>
+                    <td th:text="${student.pass}">Pass</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Marks Table -->
+        <table class="table table-bordered mt-4">
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Marks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Subject 1</td>
+                    <td th:text="${student.m1}">90</td>
+                </tr>
+                <tr>
+                    <td>Subject 2</td>
+                    <td th:text="${student.m2}">85</td>
+                </tr>
+                <tr>
+                    <td>Subject 3</td>
+                    <td th:text="${student.m3}">95</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

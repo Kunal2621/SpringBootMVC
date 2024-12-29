@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Search by ID</title>
+</head>
+<body>
+    <h1>Search Product by ID</h1>
+    
+    <!-- Search Form -->
+    <form th:action="@{/searchbyid}" method="post">
+        <label for="id">Enter Product ID:</label>
+        <input type="number" id="id" name="id" placeholder="Enter ID" required>
+        <button type="submit">Search</button>
+    </form>
+    
+    <!-- Display Result -->
+    <div th:if="${product != null}">
+        <h2>Product Details</h2>
+        <p><strong>ID:</strong> <span th:text="${product.id}"></span></p>
+        <p><strong>Name:</strong> <span th:text="${product.name}"></span></p>
+        <p><strong>Description:</strong> <span th:text="${product.description}"></span></p>
+        <p><strong>Price:</strong> <span th:text="${product.price}"></span></p>
+    </div>
+
+    <!-- If no product is found -->
+    <div th:if="${product == null}">
+        <p>No product found with the provided ID.</p>
+    </div>
+</body>
+</html>

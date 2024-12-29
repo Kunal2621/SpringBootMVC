@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Employee Data</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 18px;
+            text-align: left;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .action-buttons form {
+            margin: 0;
+        }
+        .action-buttons button {
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
+        .edit-button {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .delete-button {
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Employee Data</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Department</th>
+                <th>Salary</th>
+                <th>HRA</th>
+                <th>DA</th>
+                <th>Final Salary</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Iterate through the list of employees -->
+            <tr th:each="employee : ${Emplpoys}">
+                <td th:text="${employee.id}"></td>
+                <td th:text="${employee.name}"></td>
+                <td th:text="${employee.age}"></td>
+                <td th:text="${employee.gender}"></td>
+                <td th:text="${employee.department}"></td>
+                <td th:text="${employee.salary}"></td>
+                <td th:text="${employee.hra}"></td>
+                <td th:text="${employee.da}"></td>
+                <td th:text="${employee.finalsalary}"></td>
+                <td>
+                    <div class="action-buttons">
+                        <!-- Form for Edit -->
+                        <form th:action="@{/edit/{id}(id=${employee.id})}" method="get">
+                            <button type="submit" class="edit-button">Edit</button>
+                        </form>
+                        <!-- Form for Delete -->
+                        <form th:action="@{/delete/{id}(id=${employee.id})}" method="post">
+                            <button type="submit" class="delete-button">Delete</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

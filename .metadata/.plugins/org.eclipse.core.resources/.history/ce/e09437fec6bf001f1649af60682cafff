@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Employee Data</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 18px;
+            text-align: left;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Employee Data</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Department</th>
+                <th>Salary</th>
+                <th>HRA</th>
+                <th>DA</th>
+                <th>Final Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Iterate through the list of employees -->
+            <tr th:each="employee : ${Emplpoys}">
+                <td th:text="${employee.id}"></td>
+                <td th:text="${employee.name}"></td>
+                <td th:text="${employee.age}"></td>
+                <td th:text="${employee.gender}"></td>
+                <td th:text="${employee.department}"></td>
+                <td th:text="${employee.salary}"></td>
+                <td th:text="${employee.hra}"></td>
+                <td th:text="${employee.da}"></td>
+                <td th:text="${employee.finalsalary}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

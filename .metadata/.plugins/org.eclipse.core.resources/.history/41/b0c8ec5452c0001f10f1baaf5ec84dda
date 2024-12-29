@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Form Example</title>
+</head>
+<body>
+    <h2>Student Information Form</h2>
+    <form th:action="@{/submit}" th:object="${student}" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" th:value="*{name}" required />
+        <br/><br/>
+
+        <label for="id">ID:</label>
+        <input type="number" id="id" name="id" th:value="*{id}" required />
+        <br/><br/>
+
+        <label for="m1">Marks 1:</label>
+        <input type="number" id="m1" name="m1" th:value="*{m1}" required />
+        <br/><br/>
+
+        <label for="m2">Marks 2:</label>
+        <input type="number" id="m2" name="m2" th:value="*{m2}" required />
+        <br/><br/>
+
+        <label for="m3">Marks 3:</label>
+        <input type="number" id="m3" name="m3" th:value="*{m3}" required />
+        <br/><br/>
+
+        <label for="address">Address:</label>
+        <textarea id="address" name="address" th:text="*{address}" required></textarea>
+        <br/><br/>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

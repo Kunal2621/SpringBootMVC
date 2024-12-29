@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Search Employee by ID</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        form {
+            margin: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input, button {
+            padding: 8px;
+            margin: 5px 0;
+        }
+        table {
+            margin-top: 20px;
+            width: 50%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Search Employee by ID</h1>
+    
+    <!-- Form to search by ID -->
+    <form th:action="@{/searchEmpById}" method="post">
+        <label for="empId">Enter Employee ID:</label>
+        <input type="text" id="empId" name="id" required>
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- Display employee details if found -->
+    <div th:if="${employee != null}">
+        <h2>Employee Details</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <td th:text="${employee.id}"></td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td th:text="${employee.name}"></td>
+            </tr>
+            <tr>
+                <th>Age</th>
+                <td th:text="${employee.age}"></td>
+            </tr>
+            <tr>
+                <th>Gender</th>
+                <td th:text="${employee.gender}"></td>
+            </tr>
+            <tr>
+                <th>Department</th>
+                <td th:text="${employee.department}"></td>
+            </tr>
+            <tr>
+                <th>Salary</th>
+                <td th:text="${employee.salary}"></td>
+            </tr>
+            <tr>
+                <th>HRA</th>
+                <td th:text="${employee.hra}"></td>
+            </tr>
+            <tr>
+                <th>DA</th>
+                <td th:text="${employee.da}"></td>
+            </tr>
+            <tr>
+                <th>Final Salary</th>
+                <td th:text="${employee.finalsalary}"></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Display message if no employee is found -->
+    <div th:if="${employee == null}" style="color: red;">
+        <p>No employee found with the given ID.</p>
+    </div>
+</body>
+</html>

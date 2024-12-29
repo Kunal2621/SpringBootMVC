@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Student Data</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 18px;
+            text-align: left;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .action-buttons form {
+            margin: 0;
+        }
+        .action-buttons button {
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
+        .edit-button {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .delete-button {
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Student Data</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Total Marks</th>
+                <th>Average</th>
+                <th>Status</th>
+                <th>Subject 1 Marks</th>
+                <th>Subject 2 Marks</th>
+                <th>Subject 3 Marks</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Iterate through the list of students -->
+            <tr th:each="student : ${students}">
+                <td th:text="${student.id}"></td>
+                <td th:text="${student.name}"></td>
+                <td th:text="${student.department}"></td>
+                <td th:text="${student.totalMarks}"></td>
+                <td th:text="${student.avg}"></td>
+                <td th:text="${student.pass}"></td>
+                <td th:text="${student.m1}"></td>
+                <td th:text="${student.m2}"></td>
+                <td th:text="${student.m3}"></td>
+                <td>
+                    <div class="action-buttons">
+                        <!-- Form for Edit -->
+                        <form th:action="@{/edit/{id}(id=${student.id})}" method="get">
+                            <button type="submit" class="edit-button">Edit</button>
+                        </form>
+                        <!-- Form for Delete -->
+                        <form th:action="@{/delete/{id}(id=${student.id})}" method="get">
+                            <button type="submit" class="delete-button">Delete</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

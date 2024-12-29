@@ -1,0 +1,19 @@
+spring.application.name=EmployeeManagementSystem-1
+server.port=9090
+
+
+# H2 Database Configuration for Permanent Storage
+spring.datasource.url=jdbc:h2:file:./data/sdb
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sp
+spring.datasource.password=kunal
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+
+# Hibernate configuration
+spring.jpa.hibernate.ddl-auto=update
+
+# Show SQL queries in the console
+spring.jpa.show-sql=true
+
+# Format SQL for better readability in logs
+spring.jpa.properties.hibernate.format_sql=true
